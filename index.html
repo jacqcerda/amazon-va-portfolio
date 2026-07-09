@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loopa Silicone Sensory Activity Board — Mock Listing (Portfolio Piece)</title>
+<style>
+  :root{
+    --amazon-orange:#FF9900;
+    --amazon-dark:#131921;
+    --amazon-blue-link:#007185;
+    --bg:#FFFFFF;
+    --text:#0F1111;
+    --muted:#565959;
+    --border:#D5D9D9;
+    --star:#FFA41C;
+    --success:#007600;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Amazon Ember",Arial,sans-serif;
+    background:#EAEDED;
+    color:var(--text);
+  }
+  .portfolio-banner{
+    background:#232F3E;
+    color:#fff;
+    text-align:center;
+    padding:10px;
+    font-size:13px;
+    letter-spacing:.02em;
+  }
+  .nav{
+    background:var(--amazon-dark);
+    color:#fff;
+    padding:10px 20px;
+    font-size:13px;
+  }
+  .container{
+    max-width:1100px;
+    margin:20px auto;
+    background:var(--bg);
+    padding:24px;
+    border-radius:4px;
+  }
+  .breadcrumb{font-size:12px;color:var(--amazon-blue-link);margin-bottom:12px;}
+  .listing-grid{
+    display:grid;
+    grid-template-columns:100px 460px 1fr;
+    gap:24px;
+  }
+  .thumbs{display:flex;flex-direction:column;gap:8px;}
+  .thumb{
+    width:56px;height:56px;border:1px solid var(--border);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--muted);text-align:center;cursor:pointer;
+    background:#F7F8F8;
+  }
+  .thumb.active{border-color:var(--amazon-orange);border-width:2px;}
+  .main-image{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:6px;
+    background:linear-gradient(135deg,#FDFBF7,#E8F0EC);
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:20px;
+    color:var(--muted);font-size:13px;line-height:1.5;
+    border:1px solid var(--border);
+  }
+  .placeholder-tag{
+    font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+    color:#8a8f8f;margin-bottom:6px;font-weight:600;
+  }
+  h1.title{font-size:20px;font-weight:400;line-height:1.35;margin:0 0 6px;}
+  .brand-link{color:var(--amazon-blue-link);font-size:13px;text-decoration:none;}
+  .stars{color:var(--star);font-size:15px;}
+  .rating-row{font-size:13px;color:var(--amazon-blue-link);margin:6px 0 14px;display:flex;align-items:center;gap:8px;}
+  .price-block{margin:14px 0;}
+  .price{font-size:26px;color:var(--text);}
+  .price-sup{font-size:13px;vertical-align:top;}
+  .age-badge{
+    display:inline-block;background:#F0F2F2;border:1px solid var(--border);
+    border-radius:14px;padding:3px 10px;font-size:12px;color:var(--muted);margin-bottom:14px;
+  }
+  ul.bullets{padding-left:18px;margin:14px 0;font-size:14px;line-height:1.6;}
+  ul.bullets li{margin-bottom:10px;}
+  ul.bullets b{font-weight:700;}
+  .buybox{
+    border:1px solid var(--border);border-radius:8px;padding:18px;height:fit-content;
+  }
+  .buybox .price{font-size:24px;}
+  .buybox .delivery{font-size:13px;margin:10px 0;color:var(--text);}
+  .buybox .stock{color:var(--success);font-weight:600;font-size:15px;margin:10px 0;}
+  .btn{
+    display:block;width:100%;padding:9px;border-radius:20px;border:none;
+    font-size:13px;font-weight:500;margin-bottom:8px;cursor:pointer;
+  }
+  .btn-cart{background:#FFD814;border:1px solid #FCD200;}
+  .btn-buy{background:var(--amazon-orange);color:#fff;border:1px solid #E88A00;}
+  .section-title{
+    font-size:20px;border-bottom:1px solid var(--border);padding-bottom:10px;margin:40px 0 20px;
+  }
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:10px;
+  }
+  .gallery-card{
+    border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  }
+  .gallery-img{
+    aspect-ratio:1/1;
+    background:linear-gradient(135deg,#F7F1E8,#E4EEE9);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:14px;font-size:12px;color:var(--muted);line-height:1.5;
+  }
+  .gallery-caption{padding:8px 10px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
+  .aplus-module{
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;
+    margin-bottom:36px;
+  }
+  .aplus-module.reverse .aplus-text{order:2;}
+  .aplus-module.reverse .aplus-img{order:1;}
+  .aplus-img{
+    aspect-ratio:16/9;border-radius:8px;background:linear-gradient(135deg,#EFF3F1,#F8F4EC);
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+    color:var(--muted);font-size:12px;line-height:1.5;border:1px solid var(--border);
+  }
+  .aplus-text h3{font-size:17px;margin-bottom:8px;}
+  .aplus-text p{font-size:14px;line-height:1.6;color:var(--text);}
+  table.compare{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
+  table.compare th, table.compare td{
+    border:1px solid var(--border);padding:10px;text-align:left;
+  }
+  table.compare th{background:#F7F8F8;}
+  .check{color:var(--success);font-weight:700;}
+  .review-summary{
+    border:1px solid var(--border);border-radius:8px;padding:18px;margin-top:10px;
+    font-size:13px;color:var(--muted);line-height:1.6;
+  }
+  .note{
+    font-size:12px;color:#8a8f8f;font-style:italic;margin-top:6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="portfolio-banner">
+  PORTFOLIO MOCKUP — Not a live product. Built by Jacquis Cerda as an Amazon Content &amp; Catalog Specialist case study.
+  <br><span style="font-weight:600;">Image status: 8/8 confirmed — full image set complete</span>
+</div>
+
+<div style="background:#FFF8E1;border-bottom:1px solid #F0DFA0;color:#5C4A00;text-align:center;padding:10px 20px;font-size:12px;line-height:1.6;">
+  <b>Disclaimer:</b> All product images in this mockup are AI-generated for demonstration purposes only. This mockup illustrates how an optimized Amazon listing <i>should</i> be structured and written — for an actual live listing, professional product photography and design are strongly recommended to ensure accurate, consistent, and Amazon-compliant imagery.
+</div>
+
+<div class="nav">Amazon.com &nbsp;|&nbsp; Deliver to: United States</div>
+
+<div class="container">
+  <div class="breadcrumb">Toys &amp; Games &gt; Novelty &amp; Gag Toys &gt; Fidget Toys &gt; Sensory Toys</div>
+
+  <div class="listing-grid">
+    <!-- THUMBNAILS -->
+    <div class="thumbs">
+      <div class="thumb active"><img src="images/img1_hero.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img2_inuse.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img3_travel.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img4_scale.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img5_material.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img6_box.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img7_infographic.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb"><img src="images/img8_multiage.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+    </div>
+
+    <!-- MAIN IMAGE -->
+    <div>
+      <div class="main-image" style="padding:0;">
+        <img src="images/img1_hero.jpeg" alt="Loopa Silicone Sensory Activity Board" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+      </div>
+      <p class="note" style="margin-top:8px;">⚠️ QA note: main image background is off-white/cream, not pure white (RGB 255,255,255). Amazon's main image requirements call for a pure white background — this would need correction before use on a live listing.</p>
+    </div>
+
+    <!-- BUY BOX AREA (title + price + bullets summary) -->
+    <div>
+      <a href="#" class="brand-link">Visit the Loopa Store</a>
+      <h1 class="title">Loopa Silicone Sensory Activity Board with Bendable Strings — Quiet Fidget Travel Toy for Kids &amp; Toddlers, Calming for Autism &amp; ADHD | Car Ride &amp; Airplane Toy, Ages 3+</h1>
+
+      <div class="rating-row">
+        <span class="stars">★★★★☆</span> 4.1 &nbsp;|&nbsp; <span>128 ratings</span>
+      </div>
+
+      <div class="price-block">
+        <span class="price"><span class="price-sup">$</span>12<span class="price-sup">.99</span></span>
+      </div>
+
+      <span class="age-badge">Ages: 3 years and up</span>
+
+      <ul class="bullets">
+        <li><b>DURABLE SILICONE SENSORY BOARD</b> — Soft, bendable strings press, twist, and loop through a textured base, giving restless hands a satisfying, screen-free outlet for stress and stimming.</li>
+        <li><b>SIZED FOR REAL LITTLE HANDS</b> — Full-size strings and a generous base make this board easier to grip than smaller travel fidgets, so toddlers and preschoolers can play independently without frustration.</li>
+        <li><b>CALMING SUPPORT FOR AUTISM, ADHD &amp; SENSORY NEEDS</b> — The repetitive press-and-pull motion helps channel nervous energy and support focus for kids and adults navigating sensory processing needs.</li>
+        <li><b>QUIET COMPANION FOR TRAVEL</b> — Silent and battery-free, built for airplanes, car rides, road trips, and waiting rooms — no noise, no mess, no screens.</li>
+        <li><b>SAFE, NON-TOXIC SILICONE</b> — Certified non-toxic silicone with smooth, rounded edges. Easy to wipe clean and built for repeated, everyday play.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BUYBOX ROW (separate row below, common on mobile layouts, kept for portfolio clarity) -->
+  <div style="max-width:320px;margin-top:20px;">
+    <div class="buybox">
+      <div class="price">$12.99</div>
+      <div class="delivery">FREE delivery <b>Thursday, July 9</b><br>Or fastest delivery Tomorrow.</div>
+      <div class="stock">In Stock</div>
+      <button class="btn btn-cart">Add to Cart</button>
+      <button class="btn btn-buy">Buy Now</button>
+    </div>
+  </div>
+
+  <!-- SECONDARY IMAGE GALLERY -->
+  <h2 class="section-title">Product Images (Carousel Set)</h2>
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <img src="images/img2_inuse.jpeg" alt="Toddler using sensory board" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Lifestyle — In Use</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img3_travel.jpeg" alt="Sensory board on airplane tray table" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Lifestyle — Travel Use</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img4_scale.jpeg" alt="Sensory board scale reference" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Scale / Size Reference</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img5_material.jpeg" alt="Silicone material detail" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Material Detail</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img6_box.jpeg" alt="What's in the box" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">What's in the Box</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img7_infographic.jpeg" alt="Benefits infographic" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Benefits Infographic</div>
+    </div>
+    <div class="gallery-card">
+      <img src="images/img8_multiage.jpeg" alt="Multi-age lifestyle use" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <div class="gallery-caption">Multi-Age Use</div>
+    </div>
+  </div>
+  <p class="note">Full 8-image carousel and all 3 A+ Content modules complete.</p>
+
+  <!-- A+ CONTENT -->
+  <h2 class="section-title">From the Brand — A+ Content</h2>
+
+  <div class="aplus-module">
+    <div class="aplus-img" style="padding:0;overflow:hidden;">
+      <img src="images/aplus1_hero_banner.jpeg" alt="Loopa sensory board hero banner" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="aplus-text">
+      <h3>Turn Playtime into a Cognitive Milestone</h3>
+      <p>Inspired by open-ended, hands-on play, this board helps children build grip strength, hand-eye coordination, and spatial dexterity — one press, peel, and loop at a time. No batteries, no flashing lights, just focused, independent play.</p>
+    </div>
+  </div>
+
+  <div class="aplus-module reverse">
+    <div class="aplus-img" style="padding:0;overflow:hidden;">
+      <img src="images/aplus2_lifestyle_story.jpeg" alt="Parent and child using Loopa sensory board" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="aplus-text">
+      <h3>Soothing Sensory Feedback, Anywhere</h3>
+      <p>For kids and adults navigating sensory sensitivities, having a quiet, discreet outlet for nervous energy makes a real difference. The repetitive motion of pressing and looping the strings offers calming, satisfying feedback — a gentle tool for daily focus and stress management.</p>
+    </div>
+  </div>
+
+  <div class="aplus-module">
+    <div class="aplus-img" style="padding:0;overflow:hidden;position:relative;">
+      <img src="images/aplus3_trust_safety.jpeg" alt="Silicone material texture close-up" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;bottom:16px;right:16px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+        <span style="color:var(--success);font-size:18px;">✓</span>
+        <span style="font-size:11px;color:var(--text);font-weight:600;line-height:1.3;">Certified<br>Non-Toxic Silicone</span>
+      </div>
+    </div>
+    <div class="aplus-text">
+      <h3>Premium Quality Parents Can Trust</h3>
+      <p>Crafted entirely from certified, non-toxic silicone with smooth, burr-free edges. Built to withstand repeated daily play, easy to wipe clean, and sized for real little hands — not just the photos.</p>
+    </div>
+  </div>
+
+  <!-- COMPARISON MATRIX (generic, no competitor names) -->
+  <h2 class="section-title">Why This Listing Wins on Trust</h2>
+  <table class="compare">
+    <tr><th>Feature</th><th>This Listing (After)</th><th>Typical Market Listing (Before)</th></tr>
+    <tr><td>Grip &amp; Size</td><td class="check">✓ Addressed directly in bullet copy</td><td>Not mentioned — common unresolved buyer complaint</td></tr>
+    <tr><td>Product Description</td><td class="check">✓ Full description present</td><td>Missing or replaced with a bare safety warning</td></tr>
+    <tr><td>Bullet Readability</td><td class="check">✓ Scannable hook + benefit format</td><td>Bracket-labeled, long run-on sentences</td></tr>
+    <tr><td>Title Structure</td><td class="check">✓ Leads with validated primary keyword</td><td>Keyword-stuffed, unclear reading order</td></tr>
+  </table>
+
+  <!-- REVIEW SUMMARY -->
+  <h2 class="section-title">Customer Feedback Themes (Research Summary)</h2>
+  <div class="review-summary">
+    Based on independent market research across comparable listings in this niche, buyers consistently praise the calming, travel-friendly nature of silicone sensory boards, but a recurring complaint centers on pieces feeling too small for younger children to grip comfortably. This listing's copy and image set were built specifically to close that gap.
+    <div class="note">Summarized from patterns observed during manual research; not verbatim quotes from any single listing.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
