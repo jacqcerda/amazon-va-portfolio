@@ -48,8 +48,11 @@
     display:grid;
     grid-template-columns:100px 460px 1fr;
     gap:24px;
+    align-items:start;
   }
-  .thumbs{display:flex;flex-direction:column;gap:8px;}
+  .thumbs{display:flex;flex-direction:column;gap:8px;max-height:460px;overflow-y:auto;padding-right:2px;}
+  .thumbs::-webkit-scrollbar{width:4px;}
+  .thumbs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
   .thumb{
     width:56px;height:56px;border:1px solid var(--border);border-radius:4px;
     display:flex;align-items:center;justify-content:center;
@@ -160,20 +163,20 @@
   <div class="listing-grid">
     <!-- THUMBNAILS -->
     <div class="thumbs">
-      <div class="thumb active"><img src="images/img1_hero.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img2_inuse.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img3_travel.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img4_scale.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img5_material.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img6_box.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img7_infographic.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb"><img src="images/img8_multiage.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb active" onclick="switchImage('images/img1_hero.jpeg', this)"><img src="images/img1_hero.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img2_inuse.jpeg', this)"><img src="images/img2_inuse.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img3_travel.jpeg', this)"><img src="images/img3_travel.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img4_scale.jpeg', this)"><img src="images/img4_scale.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img5_material.jpeg', this)"><img src="images/img5_material.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img6_box.jpeg', this)"><img src="images/img6_box.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img7_infographic.jpeg', this)"><img src="images/img7_infographic.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+      <div class="thumb" onclick="switchImage('images/img8_multiage.jpeg', this)"><img src="images/img8_multiage.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
     </div>
 
     <!-- MAIN IMAGE -->
     <div>
       <div class="main-image" style="padding:0;">
-        <img src="images/img1_hero.jpeg" alt="Loopa Silicone Sensory Activity Board" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+        <img id="main-product-image" src="images/img1_hero.jpeg" alt="Loopa Silicone Sensory Activity Board" style="width:100%;height:100%;object-fit:cover;border-radius:6px;cursor:pointer;">
       </div>
       <p class="note" style="margin-top:8px;">⚠️ QA note: main image background is off-white/cream, not pure white (RGB 255,255,255). Amazon's main image requirements call for a pure white background — this would need correction before use on a live listing.</p>
     </div>
@@ -218,31 +221,31 @@
   <h2 class="section-title">Product Images (Carousel Set)</h2>
   <div class="gallery-grid">
     <div class="gallery-card">
-      <img src="images/img2_inuse.jpeg" alt="Toddler using sensory board" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img2_inuse.jpeg" alt="Toddler using sensory board" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Lifestyle — In Use</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img3_travel.jpeg" alt="Sensory board on airplane tray table" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img3_travel.jpeg" alt="Sensory board on airplane tray table" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Lifestyle — Travel Use</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img4_scale.jpeg" alt="Sensory board scale reference" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img4_scale.jpeg" alt="Sensory board scale reference" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Scale / Size Reference</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img5_material.jpeg" alt="Silicone material detail" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img5_material.jpeg" alt="Silicone material detail" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Material Detail</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img6_box.jpeg" alt="What's in the box" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img6_box.jpeg" alt="What's in the box" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">What's in the Box</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img7_infographic.jpeg" alt="Benefits infographic" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img7_infographic.jpeg" alt="Benefits infographic" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Benefits Infographic</div>
     </div>
     <div class="gallery-card">
-      <img src="images/img8_multiage.jpeg" alt="Multi-age lifestyle use" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
+      <img src="images/img8_multiage.jpeg" alt="Multi-age lifestyle use" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
       <div class="gallery-caption">Multi-Age Use</div>
     </div>
   </div>
@@ -303,6 +306,14 @@
   </div>
 
 </div>
+
+<script>
+  function switchImage(src, thumbEl) {
+    document.getElementById('main-product-image').src = src;
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumbEl.classList.add('active');
+  }
+</script>
 
 </body>
 </html>
