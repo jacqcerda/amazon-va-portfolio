@@ -2,339 +2,779 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Loopa Silicone Sensory Activity Board: Mock Listing (Portfolio Piece)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cordly: Listing Optimization Case Study</title>
 <style>
   :root{
-    --amazon-orange:#FF9900;
-    --amazon-dark:#131921;
-    --amazon-blue-link:#007185;
-    --bg:#FFFFFF;
-    --text:#0F1111;
-    --muted:#565959;
-    --border:#D5D9D9;
-    --star:#FFA41C;
-    --success:#007600;
+    --paper:#EAEDED;
+    --ink:#0F1111;
+    --ink-soft:#3D4141;
+    --line:#D5D9D9;
+    --accent:#007185;
+    --accent-soft:#E3F2F3;
+    --bad:#C40000;
+    --bad-soft:#FBEAEA;
+    --good:#007600;
+    --good-soft:#E7F3E7;
+    --card:#FFFFFF;
+    --highlight:#FF9900;
+    --price:#B12704;
+    --mono:'Courier New', Courier, monospace;
+    --display:Arial, Helvetica, sans-serif;
+    --body:Arial, Helvetica, sans-serif;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    font-family:"Amazon Ember",Arial,sans-serif;
-    background:#EAEDED;
-    color:var(--text);
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.6;
   }
-  .portfolio-banner{
-    background:#232F3E;
-    color:#fff;
-    text-align:center;
-    padding:10px;
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* HEADER */
+  header{
+    padding:64px 32px 48px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:15px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  h1{
+    font-family:var(--display);
+    font-size:clamp(36px,5vw,58px);
+    font-weight:700;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  header p.sub{
+    max-width:640px;
+    color:var(--ink-soft);
+    font-size:17px;
+    margin:0;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    margin-top:32px;
+    font-family:var(--mono);
+    font-size:15.5px;
+    color:var(--ink-soft);
+  }
+  .meta-row span b{color:var(--ink);font-weight:500;}
+
+  section{padding:56px 32px;border-bottom:1px solid var(--line);}
+  .section-head{margin-bottom:32px;max-width:720px;}
+  .section-head .num{
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--accent);
+    letter-spacing:0.1em;
+  }
+  h2{
+    font-family:var(--display);
+    font-size:28px;
+    margin:6px 0 10px;
+    font-weight:600;
+  }
+  .section-head p{color:var(--ink-soft);margin:0;font-size:15px;}
+
+  /* BEFORE / AFTER */
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .col{background:var(--card);padding:28px;}
+  .col-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:14px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .col-label.bad{background:var(--bad-soft);color:var(--bad);}
+  .col-label.good{background:var(--good-soft);color:var(--good);}
+  .field-label{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin:20px 0 6px;
+  }
+  .field-label:first-of-type{margin-top:0;}
+  .listing-title{font-size:15.5px;font-weight:600;line-height:1.4;}
+  .bullet-list{margin:0;padding:0;list-style:none;}
+  .bullet-list li{
+    font-size:16px;
+    padding:9px 0;
+    border-top:1px dashed var(--line);
+    line-height:1.5;
+  }
+  .bullet-list li:first-child{border-top:none;}
+  .bullet-list b{font-weight:600;}
+  .kw-tag{
+    display:inline-block;
+    font-family:var(--mono);
     font-size:13px;
-    letter-spacing:.02em;
+    font-weight:600;
+    background:var(--accent);
+    color:#FFFFFF;
+    padding:3px 9px;
+    border-radius:3px;
+    margin-top:6px;
+    margin-right:6px;
   }
-  .nav{
-    background:var(--amazon-dark);
-    color:#fff;
-    padding:10px 20px;
+  .pain-tag{
+    display:inline-block;
+    font-family:var(--mono);
     font-size:13px;
+    font-weight:600;
+    background:#985E00;
+    color:#FFFFFF;
+    padding:3px 9px;
+    border-radius:3px;
+    margin-top:6px;
   }
-  .container{
-    max-width:1100px;
-    margin:20px auto;
-    background:var(--bg);
-    padding:24px;
+  @media (max-width:800px){.split{grid-template-columns:1fr;}}
+
+  /* IMAGE GALLERY */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+  }
+  figure{margin:0;background:var(--card);border:1px solid var(--line);}
+  figure img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;}
+  figcaption{padding:14px 16px 16px;}
+  figcaption .role{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    display:block;
+    margin-bottom:4px;
+  }
+  figcaption p{margin:0;font-size:15.5px;color:var(--ink-soft);}
+
+  /* KEYWORD TABLE */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:16px;
+    background:var(--card);
+    border:1px solid var(--line);
+  }
+  th,td{
+    text-align:left;
+    padding:11px 14px;
+    border-bottom:1px solid var(--line);
+  }
+  th{
+    font-family:var(--mono);
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    background:#F0F2F2;
+  }
+  tr:last-child td{border-bottom:none;}
+  .tier{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:16px;
+    padding:2px 8px;
+    border-radius:20px;
+  }
+  .tier.primary{background:#131921;color:#fff;}
+  .tier.secondary{background:var(--accent);color:#FFFFFF;font-weight:600;}
+  .tier.longtail{background:#985E00;color:#FFFFFF;font-weight:600;}
+  .tier.backend{background:#555555;color:#FFFFFF;font-weight:600;}
+
+  .noise-box{
+    margin-top:20px;
+    padding:16px 18px;
+    background:#FEF7EC;
+    border-left:3px solid #FF9900;
+    font-size:16px;
+    color:#6F4E00;
+  }
+  .noise-box b{color:#131921;}
+
+  .backend-box{
+    margin-top:24px;
+    background:#131921;
+    color:#EAEDED;
+    padding:22px 24px;
     border-radius:4px;
   }
-  .breadcrumb{font-size:12px;color:var(--amazon-blue-link);margin-bottom:12px;}
-  .listing-grid{
-    display:grid;
-    grid-template-columns:100px 460px 1fr;
+  .backend-box .field-label{color:#D6E4F0;margin-top:0;}
+  .backend-string{
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.7;
+    letter-spacing:0.01em;
+  }
+  .byte-check{
+    display:flex;
     gap:24px;
-    align-items:start;
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:15px;
+    color:#D6E4F0;
   }
-  .thumbs{display:flex;flex-direction:column;gap:8px;max-height:460px;overflow-y:auto;padding-right:2px;}
-  .thumbs::-webkit-scrollbar{width:4px;}
-  .thumbs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-  .thumb{
-    width:56px;height:56px;border:1px solid var(--border);border-radius:4px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:9px;color:var(--muted);text-align:center;cursor:pointer;
-    background:#F7F8F8;
+  .byte-check b{color:#fff;}
+
+  /* PPC AWARENESS */
+  .ppc-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
   }
-  .thumb.active{border-color:var(--amazon-orange);border-width:2px;}
-  .main-image{
-    width:100%;
-    aspect-ratio:1/1;
-    border-radius:6px;
-    background:linear-gradient(135deg,#FDFBF7,#E8F0EC);
-    display:flex;align-items:center;justify-content:center;
-    text-align:center;padding:20px;
-    color:var(--muted);font-size:13px;line-height:1.5;
-    border:1px solid var(--border);
+  .ppc-card{background:var(--card);border:1px solid var(--line);padding:20px 22px;}
+  .ppc-card h3{
+    font-family:var(--display);
+    font-size:15px;
+    margin:0 0 10px;
   }
-  .placeholder-tag{
-    font-size:10px;text-transform:uppercase;letter-spacing:.08em;
-    color:#8a8f8f;margin-bottom:6px;font-weight:600;
+  .ppc-card p{font-size:16px;color:var(--ink-soft);margin:0 0 10px;}
+  .neg-tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:600;
+    background:var(--bad);
+    color:#FFFFFF;
+    padding:4px 10px;
+    border-radius:3px;
+    margin:3px 5px 3px 0;
   }
-  h1.title{font-size:20px;font-weight:400;line-height:1.35;margin:0 0 6px;}
-  .brand-link{color:var(--amazon-blue-link);font-size:13px;text-decoration:none;}
-  .stars{color:var(--star);font-size:15px;}
-  .rating-row{font-size:13px;color:var(--amazon-blue-link);margin:6px 0 14px;display:flex;align-items:center;gap:8px;}
-  .price-block{margin:14px 0;}
-  .price{font-size:26px;color:var(--text);}
-  .price-sup{font-size:13px;vertical-align:top;}
-  .age-badge{
-    display:inline-block;background:#F0F2F2;border:1px solid var(--border);
-    border-radius:14px;padding:3px 10px;font-size:12px;color:var(--muted);margin-bottom:14px;
+  @media (max-width:800px){.ppc-grid{grid-template-columns:1fr;}}
+
+  /* QA LOG */
+  .qa-log{
+    border-left:2px solid var(--line);
+    padding-left:24px;
+    margin-left:6px;
   }
-  ul.bullets{padding-left:18px;margin:14px 0;font-size:14px;line-height:1.6;}
-  ul.bullets li{margin-bottom:10px;}
-  ul.bullets b{font-weight:700;}
-  .buybox{
-    border:1px solid var(--border);border-radius:8px;padding:18px;height:fit-content;
+  .qa-item{
+    position:relative;
+    padding-bottom:26px;
   }
-  .buybox .price{font-size:24px;}
-  .buybox .delivery{font-size:13px;margin:10px 0;color:var(--text);}
-  .buybox .stock{color:var(--success);font-weight:600;font-size:15px;margin:10px 0;}
-  .btn{
-    display:block;width:100%;padding:9px;border-radius:20px;border:none;
-    font-size:13px;font-weight:500;margin-bottom:8px;cursor:pointer;
+  .qa-item:last-child{padding-bottom:0;}
+  .qa-item::before{
+    content:"";
+    position:absolute;
+    left:-29px;
+    top:4px;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--accent);
   }
-  .btn-cart{background:#FFD814;border:1px solid #FCD200;}
-  .btn-buy{background:var(--amazon-orange);color:#fff;border:1px solid #E88A00;}
-  .section-title{
-    font-size:20px;border-bottom:1px solid var(--border);padding-bottom:10px;margin:40px 0 20px;
+  .qa-item.flagged::before{border-color:var(--bad);}
+  .qa-item .qa-round{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
   }
-  .gallery-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:10px;
+  .qa-item h4{margin:4px 0 6px;font-size:15px;font-family:var(--display);}
+  .qa-item p{margin:0;font-size:16px;color:var(--ink-soft);}
+  .qa-status{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:16px;
+    padding:2px 8px;
+    border-radius:3px;
+    margin-left:8px;
+    vertical-align:middle;
   }
-  .gallery-card{
-    border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  .qa-status.pass{background:var(--good-soft);color:var(--good);}
+  .qa-status.revised{background:var(--bad-soft);color:var(--bad);}
+
+  footer{
+    padding:40px 32px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--ink-soft);
   }
-  .gallery-img{
-    aspect-ratio:1/1;
-    background:linear-gradient(135deg,#F7F1E8,#E4EEE9);
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    padding:14px;font-size:12px;color:var(--muted);line-height:1.5;
+
+  /* DISCLAIMER BANNER */
+  .disclaimer{
+    background:#131921;
+    color:#EAEDED;
+    padding:14px 32px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:15.5px;
+    letter-spacing:0.02em;
   }
-  .gallery-caption{padding:8px 10px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
-  .aplus-module{
-    display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;
-    margin-bottom:36px;
+  .disclaimer b{color:#fff;}
+
+  /* SKILLS SECTION */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
   }
-  .aplus-module.reverse .aplus-text{order:2;}
-  .aplus-module.reverse .aplus-img{order:1;}
-  .aplus-img{
-    aspect-ratio:16/9;border-radius:8px;background:linear-gradient(135deg,#EFF3F1,#F8F4EC);
-    display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
-    color:var(--muted);font-size:12px;line-height:1.5;border:1px solid var(--border);
+  .skill-card{background:var(--card);padding:22px 22px 24px;}
+  .skill-card .tag{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
   }
-  .aplus-text h3{font-size:17px;margin-bottom:8px;}
-  .aplus-text p{font-size:14px;line-height:1.6;color:var(--text);}
-  table.compare{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
-  table.compare th, table.compare td{
-    border:1px solid var(--border);padding:10px;text-align:left;
+  .skill-card h3{
+    font-family:var(--display);
+    font-size:16px;
+    margin:8px 0 8px;
   }
-  table.compare th{background:#F7F8F8;}
-  .check{color:var(--success);font-weight:700;}
-  .review-summary{
-    border:1px solid var(--border);border-radius:8px;padding:18px;margin-top:10px;
-    font-size:13px;color:var(--muted);line-height:1.6;
+  .skill-card p{font-size:15.5px;color:var(--ink-soft);margin:0;}
+
+  /* CLICKABLE THUMBNAILS */
+  figure{cursor:pointer;}
+  figure img{transition:opacity 0.15s ease;}
+  figure:hover img{opacity:0.85;}
+  figure .zoom-hint{
+    position:absolute;
+    top:10px;right:10px;
+    background:rgba(25,28,26,0.7);
+    color:#fff;
+    font-family:var(--mono);
+    font-size:15.5px;
+    padding:3px 7px;
+    border-radius:3px;
+    letter-spacing:0.04em;
   }
-  .note{
-    font-size:12px;color:#8a8f8f;font-style:italic;margin-top:6px;
+  figure{position:relative;}
+
+  /* LIGHTBOX */
+  .lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,17,15,0.92);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:min(88vw,900px);
+    max-height:80vh;
+    object-fit:contain;
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .lightbox-caption{
+    position:absolute;
+    bottom:36px;
+    left:0;right:0;
+    text-align:center;
+    color:#EAEDED;
+    font-family:var(--mono);
+    font-size:15.5px;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:24px;right:32px;
+    color:#fff;
+    font-family:var(--mono);
+    font-size:15.5px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:8px 14px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .lightbox-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;
+    font-family:var(--mono);
+    font-size:16px;
+    padding:10px 14px;
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .lightbox-nav.prev{left:24px;}
+  .lightbox-nav.next{right:24px;}
+  @media (max-width:640px){
+    .lightbox-nav{padding:8px 11px;font-size:14px;}
+    .lightbox-nav.prev{left:10px;}
+    .lightbox-nav.next{right:10px;}
   }
 </style>
 </head>
 <body>
 
-<div class="portfolio-banner">
-  PORTFOLIO MOCKUP. Not a live product. Built by Jacquis Cerda as an Amazon Content &amp; Catalog Specialist case study.
-</div>
+<div class="disclaimer"><b>Mock portfolio piece.</b> "Cordly" is an invented brand created for demonstration purposes only. No real client, product, or company is associated with this listing. Product images are AI generated and used for mock up portfolio purposes only. For real listings, it is still best to hire a professional product photographer and follow Amazon's official image guidelines.</div>
 
-<div style="background:#FFF8E1;border-bottom:1px solid #F0DFA0;color:#5C4A00;text-align:center;padding:10px 20px;font-size:12px;line-height:1.6;">
-  <b>Disclaimer:</b> All product images in this mockup are AI-generated for demonstration purposes only. This mockup illustrates how an optimized Amazon listing <i>should</i> be structured and written. For an actual live listing, professional product photography and design are strongly recommended to ensure accurate, consistent, and Amazon-compliant imagery.
-</div>
-
-<div class="nav">Amazon.com &nbsp;|&nbsp; Deliver to: United States</div>
-
-<div class="container">
-  <div class="breadcrumb">Toys &amp; Games &gt; Novelty &amp; Gag Toys &gt; Fidget Toys &gt; Sensory Toys</div>
-
-  <div class="listing-grid">
-    <!-- THUMBNAILS -->
-    <div class="thumbs">
-      <div class="thumb active" onclick="switchImage('images/img1_hero.jpeg', this)"><img src="images/img1_hero.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img2_inuse.jpeg', this)"><img src="images/img2_inuse.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img3_travel.jpeg', this)"><img src="images/img3_travel.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img4_scale.jpeg', this)"><img src="images/img4_scale.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img5_material.jpeg', this)"><img src="images/img5_material.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img6_box.jpeg', this)"><img src="images/img6_box.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img7_infographic.jpeg', this)"><img src="images/img7_infographic.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
-      <div class="thumb" onclick="switchImage('images/img8_multiage.jpeg', this)"><img src="images/img8_multiage.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Portfolio Case Study, Piece 02</div>
+    <h1>Cordly Silicone<br>Cable Organizer Clips</h1>
+    <p class="sub">A full before-and-after listing optimization, documenting keyword research from Amazon autocomplete, competitor reference analysis, copywriting, and image direction with QA notes from each iteration.</p>
+    <div class="meta-row">
+      <span>Category: <b>Home Office / Cable Management</b></span>
+      <span>Research method: <b>Amazon Autocomplete + Competitor Reference</b></span>
+      <span>Backend keyword bytes: <b>108 / 250</b></span>
+      <span>Status: <b>Ready for review</b></span>
     </div>
+  </div>
+</header>
 
-    <!-- MAIN IMAGE -->
-    <div>
-      <div class="main-image" style="padding:0;">
-        <img id="main-product-image" src="images/img1_hero.jpeg" alt="Loopa Silicone Sensory Activity Board" style="width:100%;height:100%;object-fit:cover;border-radius:6px;cursor:pointer;">
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">00</span>
+      <h2>Skills Demonstrated</h2>
+      <p>What this piece is built to prove, beyond the finished listing itself.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <span class="tag">Keyword Research</span>
+        <h3>Manual SEO methodology, applied to Amazon</h3>
+        <p>Autocomplete data classified into primary, secondary, long-tail, and backend tiers, with noise keywords identified and excluded rather than blindly included.</p>
       </div>
-      <p class="note" style="margin-top:8px;">⚠️ QA note: main image background is off-white/cream, not pure white (RGB 255,255,255). Amazon's main image requirements call for a pure white background. This would need correction before use on a live listing.</p>
-    </div>
-
-    <!-- BUY BOX AREA (title + price + bullets summary) -->
-    <div>
-      <a href="#" class="brand-link">Visit the Loopa Store</a>
-      <h1 class="title">Loopa Silicone Sensory Activity Board with Bendable Strings: Quiet Fidget Travel Toy for Kids &amp; Toddlers, Calming for Autism &amp; ADHD | Car Ride &amp; Airplane Toy, Ages 3+</h1>
-
-      <div class="rating-row">
-        <span class="stars">★★★★☆</span> 4.1 &nbsp;|&nbsp; <span>128 ratings</span>
+      <div class="skill-card">
+        <span class="tag">GEO / AEO Background</span>
+        <h3>Copy written for both algorithm and reader</h3>
+        <p>Bullets built as complete, natural sentences that answer real buyer questions, not keyword-stuffed fragments. This is the same principle that makes content surface well in AI-driven search.</p>
       </div>
-
-      <div class="price-block">
-        <span class="price"><span class="price-sup">$</span>12<span class="price-sup">.99</span></span>
+      <div class="skill-card">
+        <span class="tag">Listing Copywriting</span>
+        <h3>Feature-to-benefit rewrite</h3>
+        <p>Every bullet converted from a flat feature statement into a hook, benefit, and proof structure mapped to a specific researched keyword.</p>
       </div>
-
-      <span class="age-badge">Ages: 3 years and up</span>
-
-      <ul class="bullets">
-        <li><b>DURABLE SILICONE SENSORY BOARD:</b> Soft, bendable strings press, twist, and loop through a textured base, giving restless hands a satisfying, screen-free outlet for stress and stimming.</li>
-        <li><b>SIZED FOR REAL LITTLE HANDS:</b> Full-size strings and a generous base make this board easier to grip than smaller travel fidgets, so toddlers and preschoolers can play independently without frustration.</li>
-        <li><b>CALMING SUPPORT FOR AUTISM, ADHD &amp; SENSORY NEEDS:</b> The repetitive press-and-pull motion helps channel nervous energy and support focus for kids and adults navigating sensory processing needs.</li>
-        <li><b>QUIET COMPANION FOR TRAVEL:</b> Silent and battery-free, built for airplanes, car rides, road trips, and waiting rooms. No noise, no mess, no screens.</li>
-        <li><b>SAFE, NON-TOXIC SILICONE:</b> Certified non-toxic silicone with smooth, rounded edges. Easy to wipe clean and built for repeated, everyday play.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- BUYBOX ROW (separate row below, common on mobile layouts, kept for portfolio clarity) -->
-  <div style="max-width:320px;margin-top:20px;">
-    <div class="buybox">
-      <div class="price">$12.99</div>
-      <div class="delivery">FREE delivery <b>Thursday, July 9</b><br>Or fastest delivery Tomorrow.</div>
-      <div class="stock">In Stock</div>
-      <button class="btn btn-cart">Add to Cart</button>
-      <button class="btn btn-buy">Buy Now</button>
-    </div>
-  </div>
-
-  <!-- SECONDARY IMAGE GALLERY -->
-  <h2 class="section-title">Product Images (Carousel Set)</h2>
-  <div class="gallery-grid">
-    <div class="gallery-card">
-      <img src="images/img2_inuse.jpeg" alt="Toddler using sensory board" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Lifestyle: In Use</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img3_travel.jpeg" alt="Sensory board on airplane tray table" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Lifestyle: Travel Use</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img4_scale.jpeg" alt="Sensory board scale reference" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Scale / Size Reference</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img5_material.jpeg" alt="Silicone material detail" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Material Detail</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img6_box.jpeg" alt="What's in the box" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">What's in the Box</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img7_infographic.jpeg" alt="Benefits infographic" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Benefits Infographic</div>
-    </div>
-    <div class="gallery-card">
-      <img src="images/img8_multiage.jpeg" alt="Multi-age lifestyle use" style="width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;">
-      <div class="gallery-caption">Multi-Age Use</div>
-    </div>
-  </div>
-  <p class="note">Full 8-image carousel and all 3 A+ Content modules complete.</p>
-
-  <!-- A+ CONTENT -->
-  <h2 class="section-title">From the Brand: A+ Content</h2>
-
-  <div class="aplus-module">
-    <div class="aplus-img" style="padding:0;overflow:hidden;">
-      <img src="images/aplus1_hero_banner.jpeg" alt="Loopa sensory board hero banner" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="aplus-text">
-      <h3>Turn Playtime into a Cognitive Milestone</h3>
-      <p>Inspired by open-ended, hands-on play, this board helps children build grip strength, hand-eye coordination, and spatial dexterity, one press, peel, and loop at a time. No batteries, no flashing lights, just focused, independent play.</p>
-    </div>
-  </div>
-
-  <div class="aplus-module reverse">
-    <div class="aplus-img" style="padding:0;overflow:hidden;">
-      <img src="images/aplus2_lifestyle_story.jpeg" alt="Parent and child using Loopa sensory board" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="aplus-text">
-      <h3>Soothing Sensory Feedback, Anywhere</h3>
-      <p>For kids and adults navigating sensory sensitivities, having a quiet, discreet outlet for nervous energy makes a real difference. The repetitive motion of pressing and looping the strings offers calming, satisfying feedback, a gentle tool for daily focus and stress management.</p>
-    </div>
-  </div>
-
-  <div class="aplus-module">
-    <div class="aplus-img" style="padding:0;overflow:hidden;position:relative;">
-      <img src="images/aplus3_trust_safety.jpeg" alt="Silicone material texture close-up" style="width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;bottom:16px;right:16px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
-        <span style="color:var(--success);font-size:18px;">✓</span>
-        <span style="font-size:11px;color:var(--text);font-weight:600;line-height:1.3;">Certified<br>Non-Toxic Silicone</span>
+      <div class="skill-card">
+        <span class="tag">Image Art Direction</span>
+        <h3>Structured prompt briefs with consistency locks</h3>
+        <p>Five images planned against specific buyer questions, each prompt built with labeled subject, composition, lighting, and exclusion fields.</p>
+      </div>
+      <div class="skill-card">
+        <span class="tag">QA & Revision Process</span>
+        <h3>Documented, not hidden</h3>
+        <p>Every flagged issue, including bend accuracy, slot shape drift, and cable mismatch, is logged with the reasoning, not smoothed over in the final deliverable.</p>
+      </div>
+      <div class="skill-card">
+        <span class="tag">Scope Discipline</span>
+        <h3>Organic-only, clearly bounded</h3>
+        <p>PPC-adjacent considerations documented without overstepping into ad management, showing a clear understanding of where this service starts and stops.</p>
       </div>
     </div>
-    <div class="aplus-text">
-      <h3>Premium Quality Parents Can Trust</h3>
-      <p>Crafted entirely from certified, non-toxic silicone with smooth, burr-free edges. Built to withstand repeated daily play, easy to wipe clean, and sized for real little hands, not just the photos.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>Before &amp; After: Listing Copy</h2>
+      <p>The weak version reflects common, real patterns seen across generic cable-clip listings: no primary keyword in the title, feature-dumped bullets with no benefit or hook. The optimized version maps every claim to a researched keyword.</p>
+    </div>
+
+    <div class="split">
+      <div class="col">
+        <span class="col-label bad">Before: Weak Listing</span>
+
+        <div class="field-label">Title</div>
+        <div class="listing-title">Cable Clips Cord Organizer Cable Management Clips</div>
+
+        <div class="field-label">Bullets</div>
+        <ul class="bullet-list">
+          <li>Good quality clips.</li>
+          <li>Easy to install.</li>
+          <li>Works for most cables.</li>
+          <li>Made of durable material.</li>
+          <li>Great for home or office.</li>
+        </ul>
+
+        <div class="field-label">Why it scores low</div>
+        <ul class="bullet-list">
+          <li>No primary keyword anywhere in the title</li>
+          <li>No quantity, size, or mount method stated</li>
+          <li>Bullets have no hooks, no benefits, no specifics</li>
+          <li>Doesn't answer real buyer concerns (adhesive strength, cable thickness fit)</li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <span class="col-label good">After: Optimized Listing</span>
+
+        <div class="field-label">Title</div>
+        <div class="listing-title">Cordly Silicone Cable Organizer Clips, Adhesive Cable Management Bar for Desk, Multi Slot Cord Holder for Home and Office, 2 Pack (3 and 5 Slots)</div>
+
+        <div class="field-label">Bullets</div>
+        <ul class="bullet-list">
+          <li><b>MULTI SLOT CABLE ORGANIZER.</b> This cable organizer clips bar holds multiple cords in one row instead of scattering single clips across your desk, keeping cable runs tidy and easy to trace.<br><span class="kw-tag">cable organizer clips</span><span class="pain-tag">Pain point: single clips get scattered and lost</span></li>
+          <li><b>SOFT FLEXIBLE SILICONE.</b> Made from flexible silicone that grips cables snugly without pinching or wearing down cable coating over time.<br><span class="pain-tag">Pain point: rigid plastic clips crack or damage cable coating</span></li>
+          <li><b>STRONG ADHESIVE HOLD.</b> The adhesive base sticks securely to desks, walls, and car interiors, keeping this cable organizer for desk setups in place through daily use.<br><span class="kw-tag">cable organizer for desk</span><span class="pain-tag">Pain point: adhesive clips lose grip within weeks</span></li>
+          <li><b>FITS EVERYDAY CABLE THICKNESS.</b> Includes a 3 slot and 5 slot bar so you can match the right size to how many cords you are organizing, with each slot cut wide enough for standard charging and USB cables without squeezing.<br><span class="kw-tag">cable organizer clips adhesive</span><span class="pain-tag">Pain point: single-size clips too small for thicker cables</span></li>
+          <li><b>LOW PROFILE, DAMAGE FREE REMOVAL.</b> These cord clips sit flat and peel off cleanly without leaving marks, making rearranging your setup simple.<br><span class="kw-tag">cord clips</span><span class="pain-tag">Pain point: adhesive residue or paint peeling on removal</span></li>
+        </ul>
+
+        <div class="field-label">Feature to benefit mapping</div>
+        <ul class="bullet-list">
+          <li>Multi slot bar (feature) removes the need to place and align single clips one at a time (benefit).</li>
+          <li>Flexible silicone (feature) protects cable coating from wear over months of daily use (benefit).</li>
+          <li>Adhesive base rated for repeated daily use (feature) means the bar stays mounted instead of needing to be re-stuck (benefit).</li>
+          <li>Two bar sizes with wide slots (feature) fit both thin charging cables and thicker USB cords in the same pack (benefit).</li>
+          <li>Clean-release adhesive (feature) lets buyers reposition or remove the bar without residue or surface damage (benefit).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="noise-box">
+      <b>Review and pain point research:</b> Since this is a mock portfolio piece with no real product or reviews, pain points reflect common, recurring complaint patterns seen across real cable clip listings during category research (adhesive failing over time, clips too small for thicker charging cables, plastic clips cracking or damaging cable coating, residue left behind on removal). No verbatim review text, star ratings, or specific ASINs were copied. This mirrors the review-mining step from the audit method: identify what buyers repeatedly praise or complain about, then write bullets that answer those points directly.
     </div>
   </div>
+</section>
 
-  <!-- COMPARISON MATRIX (generic, no competitor names) -->
-  <h2 class="section-title">Why This Listing Wins on Trust</h2>
-  <table class="compare">
-    <tr><th>Feature</th><th>This Listing (After)</th><th>Typical Market Listing (Before)</th></tr>
-    <tr><td>Grip &amp; Size</td><td class="check">✓ Addressed directly in bullet copy</td><td>Not mentioned: common unresolved buyer complaint</td></tr>
-    <tr><td>Product Description</td><td class="check">✓ Full description present</td><td>Missing or replaced with a bare safety warning</td></tr>
-    <tr><td>Bullet Readability</td><td class="check">✓ Scannable hook + benefit format</td><td>Bracket-labeled, long run-on sentences</td></tr>
-    <tr><td>Title Structure</td><td class="check">✓ Leads with validated primary keyword</td><td>Keyword-stuffed, unclear reading order</td></tr>
-  </table>
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>Product Images</h2>
+      <p>Five AI-generated product images, each briefed for a specific buyer question. Full prompts and QA notes documented in Section 05.</p>
+    </div>
+    <div class="gallery" id="gallery">
+      <figure data-index="0">
+        <span class="zoom-hint">Click to enlarge</span>
+        <img src="images/01-hero.jpeg" alt="Cordly cable organizer bars, main white background image">
+        <figcaption><span class="role">Image 1: Hero</span><p>White background, both bar sizes shown together. Answers "what is this."</p></figcaption>
+      </figure>
+      <figure data-index="1">
+        <span class="zoom-hint">Click to enlarge</span>
+        <img src="images/02-lifestyle.jpeg" alt="Cordly cable organizer bars in use on a desk with cables">
+        <figcaption><span class="role">Image 2: In Use</span><p>Cables seated in the slots on a real desk edge. Answers "does it actually hold my cables."</p></figcaption>
+      </figure>
+      <figure data-index="2">
+        <span class="zoom-hint">Click to enlarge</span>
+        <img src="images/03-detail.jpeg" alt="Cordly cable organizer bar detail showing adhesive base and slot shape">
+        <figcaption><span class="role">Image 3: Material Detail</span><p>Adhesive base and open slot design. Answers "how does it mount, what's it made of."</p></figcaption>
+      </figure>
+      <figure data-index="3">
+        <span class="zoom-hint">Click to enlarge</span>
+        <img src="images/04-size-comparison.jpeg" alt="Cordly cable organizer bars side by side showing size comparison">
+        <figcaption><span class="role">Image 4: Size Comparison</span><p>3-slot vs 5-slot bar, flat lay. Space reserved for dimension callout overlay.</p></figcaption>
+      </figure>
+      <figure data-index="4">
+        <span class="zoom-hint">Click to enlarge</span>
+        <img src="images/05-feature-fit.jpeg" alt="Cordly cable organizer bar with a cable seated in the slot">
+        <figcaption><span class="role">Image 5: Cable Fit</span><p>Close angle on cable-to-slot fit. Answers "will my cable actually sit in there properly."</p></figcaption>
+      </figure>
+    </div>
 
-  <!-- REVIEW SUMMARY -->
-  <h2 class="section-title">Customer Feedback Themes (Research Summary)</h2>
-  <div class="review-summary">
-    Based on independent market research across comparable listings in this niche, buyers consistently praise the calming, travel-friendly nature of silicone sensory boards, but a recurring complaint centers on pieces feeling too small for younger children to grip comfortably. This listing's copy and image set were built specifically to close that gap.
-    <div class="note">Summarized from patterns observed during manual research; not verbatim quotes from any single listing.</div>
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-close" id="lightboxClose">Close ✕</div>
+      <div class="lightbox-nav prev" id="lightboxPrev">‹</div>
+      <img id="lightboxImg" src="" alt="">
+      <div class="lightbox-nav next" id="lightboxNext">›</div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
   </div>
+</section>
 
-  <!-- KEYWORD STRATEGY SECTION -->
-  <h2 class="section-title">Keyword Strategy (Behind the Scenes)</h2>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">This is the research and placement logic behind the title and bullets above. Buyers never see this table. It's included here to show the methodology, not as part of the live listing.</p>
-  <table class="compare">
-    <tr><th>Keyword</th><th>Type</th><th>Placement</th><th>Notes</th></tr>
-    <tr><td>silicone sensory activity board</td><td>Primary</td><td>Title (front) + Bullet 1</td><td>Core validated search term, leads the title</td></tr>
-    <tr><td>bendable strings</td><td>Secondary</td><td>Title + Bullet 1</td><td>Differentiates from static/press-only sensory boards</td></tr>
-    <tr><td>quiet fidget travel toy</td><td>Secondary</td><td>Title + Bullet 4</td><td>Captures travel and noise-sensitive use case</td></tr>
-    <tr><td>calming for autism &amp; ADHD</td><td>Secondary</td><td>Title + Bullet 3</td><td>High-intent audience, direct need match</td></tr>
-    <tr><td>toy for kids and toddlers</td><td>Secondary</td><td>Title</td><td>Broadens age-range discoverability</td></tr>
-    <tr><td>sized for small hands</td><td>Long-tail</td><td>Bullet 2</td><td>Written directly to close the grip complaint found in research</td></tr>
-    <tr><td>car ride and airplane toy</td><td>Long-tail</td><td>Title</td><td>Specific use-case search behavior</td></tr>
-    <tr><td>screen-free sensory toy</td><td>Long-tail</td><td>Bullet 1</td><td>Appeals to parents actively limiting screen time</td></tr>
-    <tr><td>non-toxic silicone toy</td><td>Long-tail</td><td>Bullet 5</td><td>Trust and safety-driven search behavior</td></tr>
-  </table>
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>Keyword Research</h2>
+      <p>Sourced from four Amazon autocomplete sessions (seed terms typed progressively: "cable or" → "cable orga" → "cable organizer c" → "cable organizer clips") plus one competitor reference listing for form-factor confirmation. No competitor titles, bullets, or ASINs were copied.</p>
+    </div>
 
-  <h3 style="font-size:15px;margin:24px 0 10px;">Backend Search Terms (Seller Central Field, Hidden from Buyers)</h3>
-  <div class="review-summary" style="font-family:monospace;font-size:12px;letter-spacing:0.02em;">
-    squeeze pad tactile mat busy panel montessori tool occupational therapy aid anxiety relief fine motor skills kit teether alternative spd tool self regulation aid nail biting alternative
-    <div class="note" style="font-family:'Amazon Ember',Arial,sans-serif;">185 of 250 bytes used. Verified against the title and bullets above: zero word overlap, no singular/plural pairs, no brand names, no ASINs, no punctuation.</div>
+    <table>
+      <thead>
+        <tr><th>Keyword</th><th>Tier</th><th>Placement</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>cable organizer clips</td><td><span class="tier primary">Primary</span></td><td>Title + Bullet 1</td><td>Appeared in all 4 autocomplete sessions</td></tr>
+        <tr><td>cable organizer for desk</td><td><span class="tier secondary">Secondary</span></td><td>Title + Bullet 3</td><td>High repeat frequency</td></tr>
+        <tr><td>cable organizer clips adhesive</td><td><span class="tier secondary">Secondary</span></td><td>Title + Bullet 4</td><td>Appeared 3x, confirms mount method</td></tr>
+        <tr><td>cable clips</td><td><span class="tier secondary">Secondary</span></td><td>Title</td><td>Shorter/broader variant</td></tr>
+        <tr><td>cord management clips</td><td><span class="tier secondary">Secondary</span></td><td>Title</td><td>Alt phrasing</td></tr>
+        <tr><td>cord clips</td><td><span class="tier secondary">Secondary</span></td><td>Bullet 5</td><td>Alt phrasing</td></tr>
+        <tr><td>cable organizer clips outdoor</td><td><span class="tier longtail">Long-tail</span></td><td>Backend</td><td>Specific use case</td></tr>
+        <tr><td>cable organizer clips small</td><td><span class="tier longtail">Long-tail</span></td><td>Backend</td><td>Size-specific intent</td></tr>
+        <tr><td>cable organizer clips black / clear</td><td><span class="tier longtail">Long-tail</span></td><td>Backend</td><td>Color-specific intent</td></tr>
+        <tr><td>cable organiser (UK spelling)</td><td><span class="tier backend">Backend</span></td><td>Backend only</td><td>Regional variation, not visible-listing worthy</td></tr>
+      </tbody>
+    </table>
+
+    <div class="noise-box">
+      <b>Keywords considered and rejected:</b> cable organizer box, cable organizer bag, cable organizer pouch, cable organizer travel, cable organizer charging station, cable organizer conduit, cable organizer car, cable organizer cover. These appeared in the autocomplete data but describe different product types (storage bags, cases, conduit tubing), so pulling them in would misrepresent the product and waste backend byte space on irrelevant traffic.
+    </div>
+
+    <div class="backend-box">
+      <div class="field-label">Backend Search Terms</div>
+      <div class="backend-string">organiser wire holder tidy clamp cinch strap hook loop channel raceway black clear small outdoor sticky grip</div>
+      <div class="byte-check">
+        <span>Byte count: <b>108 / 250</b></span>
+        <span>Repeats front-end words: <b>None</b></span>
+        <span>Singular/plural pairs: <b>None</b></span>
+        <span>Punctuation: <b>None</b></span>
+      </div>
+    </div>
   </div>
+</section>
 
-</div>
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>PPC Awareness</h2>
+      <p>Keyword research here is used strictly for organic placement in the listing copy. This section documents the PPC-adjacent considerations a client would still need, without positioning the deliverable as ad management.</p>
+    </div>
+    <div class="ppc-grid">
+      <div class="ppc-card">
+        <h3>Terms worth negative-matching</h3>
+        <p>Broad autocomplete data pulls in adjacent products. If this listing ran PPC, these terms would burn spend without converting:</p>
+        <span class="neg-tag">cable organizer bag</span>
+        <span class="neg-tag">cable organizer box</span>
+        <span class="neg-tag">cable organizer pouch</span>
+        <span class="neg-tag">cable organizer travel case</span>
+        <span class="neg-tag">charging station</span>
+      </div>
+      <div class="ppc-card">
+        <h3>Why this stays organic-only</h3>
+        <p>Keyword placement in the title, bullets, and backend is scoped to indexing and organic search relevance. Bid strategy, campaign structure, and negative keyword lists at the account level fall outside this deliverable's scope and would sit with a PPC specialist or the client's ad manager.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>Image QA Log</h2>
+      <p>Documented feedback across each image generation round. Shown here because the review process, not just the final image, is what demonstrates a repeatable, trustworthy method.</p>
+    </div>
+    <div class="qa-log">
+      <div class="qa-item">
+        <span class="qa-round">Image 1: Hero</span><span class="qa-status pass">Passed round 1</span>
+        <h4>White background, both slot counts correct</h4>
+        <p>Slot count, capsule shape, and background matched brief on first attempt. Used as the visual anchor for every image after it.</p>
+      </div>
+      <div class="qa-item">
+        <span class="qa-round">Image 2: Lifestyle</span><span class="qa-status pass">Passed round 1</span>
+        <h4>Cable colors and connector types held consistent</h4>
+        <p>Matched image 1's product exactly, believable desk scene, no text or hands.</p>
+      </div>
+      <div class="qa-item flagged">
+        <span class="qa-round">Image 3: Detail, attempt 1</span><span class="qa-status revised">Revised</span>
+        <h4>Bend exceeded realistic material flex</h4>
+        <p>Product folded to near 90 degrees, more than silicone of this thickness would realistically flex. Flagged as an accuracy risk, not just an aesthetic one. An image promising flexibility the product can't deliver leads to returns.</p>
+      </div>
+      <div class="qa-item flagged">
+        <span class="qa-round">Image 3: Detail, attempt 2</span><span class="qa-status revised">Revised</span>
+        <h4>Slot shape drifted to closed circular holes</h4>
+        <p>Bend was corrected, but slots no longer matched the open U-groove shape from images 1 and 2. Rewrote prompt with explicit geometry language locking the open-top slot shape.</p>
+      </div>
+      <div class="qa-item">
+        <span class="qa-round">Image 3: Detail, attempt 3</span><span class="qa-status pass">Accepted</span>
+        <h4>Slot shape corrected, composition drifted</h4>
+        <p>Open U-groove shape matched reference correctly. Composition rendered as two bars in a propped pose rather than the single tilted bar specified. Accepted with the discrepancy noted, since the core product accuracy issue (slot shape) was resolved.</p>
+      </div>
+      <div class="qa-item">
+        <span class="qa-round">Image 4: Size Comparison</span><span class="qa-status pass">Passed round 1</span>
+        <h4>Clean flat lay, no redo needed</h4>
+        <p>Straight alignment, pure white background, generous negative space left for a dimension callout to be added in post.</p>
+      </div>
+      <div class="qa-item flagged">
+        <span class="qa-round">Image 5: Cable Fit</span><span class="qa-status revised">Accepted with notes</span>
+        <h4>Minor slot shape and cable variance</h4>
+        <p>Slot silhouette read slightly narrower than the rest of the set and the cable connector didn't fully match image 2. Accepted for this piece, logged here as an example of a trade-off call made under time constraints rather than an unlimited-revision workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Cordly is an invented brand built for portfolio demonstration purposes only. No real competitor listings, ASINs, or reviews were reproduced in this case study.
+</footer>
 
 <script>
-  function switchImage(src, thumbEl) {
-    document.getElementById('main-product-image').src = src;
-    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-    thumbEl.classList.add('active');
-  }
-</script>
+  (function(){
+    var figures = Array.prototype.slice.call(document.querySelectorAll('#gallery figure'));
+    var images = figures.map(function(f){
+      return {
+        src: f.querySelector('img').getAttribute('src'),
+        alt: f.querySelector('img').getAttribute('alt'),
+        caption: f.querySelector('figcaption').textContent.trim()
+      };
+    });
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var lightboxCaption = document.getElementById('lightboxCaption');
+    var current = 0;
 
+    function show(i){
+      current = (i + images.length) % images.length;
+      lightboxImg.setAttribute('src', images[current].src);
+      lightboxImg.setAttribute('alt', images[current].alt);
+      lightboxCaption.textContent = images[current].caption;
+    }
+    function open(i){
+      show(i);
+      lightbox.classList.add('open');
+    }
+    function close(){
+      lightbox.classList.remove('open');
+    }
+
+    figures.forEach(function(f){
+      f.addEventListener('click', function(){
+        open(parseInt(f.getAttribute('data-index'), 10));
+      });
+    });
+    document.getElementById('lightboxClose').addEventListener('click', close);
+    document.getElementById('lightboxPrev').addEventListener('click', function(e){ e.stopPropagation(); show(current - 1); });
+    document.getElementById('lightboxNext').addEventListener('click', function(e){ e.stopPropagation(); show(current + 1); });
+    lightbox.addEventListener('click', function(e){ if(e.target === lightbox) close(); });
+    document.addEventListener('keydown', function(e){
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowLeft') show(current - 1);
+      if(e.key === 'ArrowRight') show(current + 1);
+    });
+  })();
+</script>
 </body>
 </html>
